@@ -1,0 +1,7 @@
+name "markdown-spec"
+description "Convert the CommonMark spec to a runnable DDoc file with Markdown"
+authors "David Gileadi"
+copyright "2017 David Gileadi"
+license "boost"
+lib "curl"
+dependency "std_data_json" version="~>0.18.2"

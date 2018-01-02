@@ -1,0 +1,85 @@
+EXAMPLE_HEADER = <h2 class="example"><a href="#example-$1" name="example-$1">Example $1</a>
+(<a href="http://spec.commonmark.org/0.28/#example-$1">see it in the spec</a> under $2)</h2>
+EXPLANATION = <div class="explanation"><div id="result-$1" class="result exclude"></div> <span id="explanation-$1">$2</span></div>
+MARKDOWN_TEST =
+<div class="html code-block"><strong>Rendered HTML</strong><pre><code id="actual-code-$1"></code></pre></div>
+<div id="actual-$1" class="actual">$2</div>
+EXPECTED_RESULT =
+<div class="html code-block"><strong>Expected HTML</strong><pre><code id="expected-code-$1"></code></pre></div>
+<div id="expected-$1" class="expected" data-fail-reason="$2">$3</div>
+
+DDOC =
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>DDoc Markdown Tests</title>
+    <style type="text/css" media="screen">
+        .code-block {
+            float: left;
+            margin: 0;
+            width: 33%;
+            margin-bottom: 2em;
+        }
+        .actual, .expected {
+            display: none;
+        }
+        h2.example {
+            clear: both;
+        }
+        .result {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            -webkit-border-radius: .5em;
+            -moz-border-radius: .5em;
+            border-radius: .5em;
+        }
+        .failed, .lenient-failed {
+            background: red;
+        }
+        .exclude {
+            background: maroon;
+        }
+        .lenient-success {
+            background: orange;
+        }
+        .success {
+            background: green;
+        }
+        .code-block span {
+            display: inline-block;
+            background: radial-gradient(circle, #cc0, rgba(192,192,0,0) 2px);
+        }
+    </style>
+  </head>
+  <body id="ddoc_main" class="ddoc dlang">
+    <div class="content_wrapper">
+      <section id="module_content">$(BODY)</section>
+    </div>
+  </body>
+  <script>
+    for (var i = 1; i < 2000; i++) {
+      var markdown = document.getElementById('markdown-' + i);
+      if (!markdown) continue; markdown = markdown.value;
+      var markdownCode = document.getElementById('markdown-code-' + i);
+      markdownCode.textContent = markdown;
+      markdownCode.innerHTML = markdownCode.innerHTML.replace(/ /g, '<span> </span>').replace(/\t/g, '→');
+      var expectedEl = document.getElementById('expected-' + i);
+      if (!expectedEl) continue; var expected = expectedEl.innerHTML;
+      var actual = document.getElementById('actual-' + i);
+      if (!actual) continue; actual = actual.innerHTML;
+      document.getElementById('actual-code-' + i).textContent = actual;
+      document.getElementById('expected-code-' + i).textContent = expected;
+      var failed = expected != actual;
+      var lenient = '';
+// be lenient with paragraphs and whitespace:
+if (failed && expectedEl.firstChild && expectedEl.firstChild.tagName === 'P') { expected = expectedEl.firstChild.innerHTML.trim(); actual = actual.trim(); failed = expected != actual; lenient = 'lenient-'; }
+      var failReason = document.getElementById('expected-' + i).dataset.failReason;
+      document.getElementById('result-' + i).className = 'result ' + lenient + (failed ? 'failed' : 'success');
+      if (Number(failReason)) failReason = ' <a href="#fail_reason_' + failReason + '">as expected</a>'; else failReason = '';
+      if (lenient && !failed) lenient = ' after adjusting whitespace'; else lenient = '';
+      document.getElementById('explanation-' + i).innerHTML = (failed ? 'Failed' : 'Passed') + failReason + lenient + '.';
+    }
+  </script>
+</html>$(LF)
