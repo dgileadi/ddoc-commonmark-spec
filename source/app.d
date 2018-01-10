@@ -36,21 +36,29 @@ example failures](#fail_reasons) too.
     auto specJSON = specFile.readText();
 	specJSON.strip();
 	specJSON.skipOver("[");
+    string currentSection;
 
 	while (specJSON.length > 1)
 	{
 		auto test = specJSON.parseJSONValue();
         string exampleNumber = cast(string) test["example"];
+        string section = cast(string) test["section"];
 
-		ddoc.write("\n$(EXAMPLE_HEADER ", exampleNumber, ", ", test["section"], ")\n");
+        if (section != currentSection)
+        {
+            currentSection = section;
+            ddoc.write("\n# ", section, "\n");
+        }
+
+		ddoc.write("\n$(EXAMPLE_HEADER ", exampleNumber, ")\n");
 
         bool ignore = (exampleNumber in ignoreExamples) !is null;
         bool exclude = ignore && cast(bool) ignoreExamples[exampleNumber]["exclude"];
         string failReason = ignore ? cast(string) ignoreExamples[exampleNumber]["reason"] : "0";
         string markdown = cast(string) test["markdown"];
-        markdown.replaceCodeBlockDelimiters(cast(string) test["section"]);
+        markdown.replaceCodeBlockDelimiters(section);
         string expected = cast(string) test["html"];
-        expected.replaceCodeBlockDelimiters(cast(string) test["section"]);
+        expected.replaceCodeBlockDelimiters(section);
 
         ddoc.write("$(EXPLANATION ", exampleNumber, ",");
         if (ignore)

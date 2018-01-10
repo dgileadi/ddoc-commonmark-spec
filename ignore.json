@@ -1,11 +1,16 @@
 {
   "reasons": [
-    "`---` indicates a code block in DDoc, not a heading or thematic break"
+    "`---` indicates a code block in DDoc, not a heading or thematic break",
+    "DDoc code blocks must be closed by hand"
   ],
   "examples": {
     "25": {
       "reason": 1,
       "exclude": true
+    },
+    "97": {
+        "reason": 1,
+        "exclude": true
     }
   }
 }
