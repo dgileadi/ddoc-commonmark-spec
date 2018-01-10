@@ -3,65 +3,9 @@
     "`---` indicates a code block in DDoc, not a heading or thematic break"
   ],
   "examples": {
-    "13": {
-        "reason": 1,
-        "exclude": true
-    },
-    "29": {
+    "25": {
       "reason": 1,
       "exclude": true
-    },
-    "50": {
-      "reason": 1,
-      "exclude": true
-    },
-    "52": {
-        "reason": 1,
-        "exclude": true
-    },
-    "53": {
-        "reason": 1,
-        "exclude": true
-    },
-    "54": {
-        "reason": 1,
-        "exclude": true
-    },
-    "55": {
-        "reason": 1,
-        "exclude": true
-    },
-    "56": {
-        "reason": 1,
-        "exclude": true
-    },
-    "58": {
-        "reason": 1,
-        "exclude": true
-    },
-    "59": {
-        "reason": 1,
-        "exclude": true
-    },
-    "60": {
-        "reason": 1,
-        "exclude": true
-    },
-    "61": {
-        "reason": 1,
-        "exclude": true
-    },
-    "63": {
-        "reason": 1,
-        "exclude": true
-    },
-    "64": {
-        "reason": 1,
-        "exclude": true
-    },
-    "65": {
-        "reason": 1,
-        "exclude": true
     }
   }
 }

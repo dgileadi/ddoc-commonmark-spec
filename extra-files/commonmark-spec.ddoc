@@ -62,24 +62,35 @@ DDOC =
     for (var i = 1; i < 2000; i++) {
       var markdown = document.getElementById('markdown-' + i);
       if (!markdown) continue; markdown = markdown.value;
-      var markdownCode = document.getElementById('markdown-code-' + i);
-      markdownCode.textContent = markdown;
-      markdownCode.innerHTML = markdownCode.innerHTML.replace(/ /g, '<span> </span>').replace(/\t/g, '→');
-      var expectedEl = document.getElementById('expected-' + i);
-      if (!expectedEl) continue; var expected = expectedEl.innerHTML;
+      showCode(markdown, 'markdown-code-' + i);
+      var expected = document.getElementById('expected-' + i);
+      if (!expected) continue; expected = expected.innerHTML;
+      showCode(expected, 'expected-code-' + i);
       var actual = document.getElementById('actual-' + i);
       if (!actual) continue; actual = actual.innerHTML;
-      document.getElementById('actual-code-' + i).textContent = actual;
-      document.getElementById('expected-code-' + i).textContent = expected;
+      showCode(actual, 'actual-code-' + i);
+
       var failed = expected != actual;
-      var lenient = '';
-// be lenient with paragraphs and whitespace:
-if (failed && expectedEl.firstChild && expectedEl.firstChild.tagName === 'P') { expected = expectedEl.firstChild.innerHTML.trim(); actual = actual.trim(); failed = expected != actual; lenient = 'lenient-'; }
       var failReason = document.getElementById('expected-' + i).dataset.failReason;
+      var lenient = '';
+
+      // be lenient with paragraphs and whitespace:
+      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); failed = expected != actual; lenient = 'lenient-'; }
+
       document.getElementById('result-' + i).className = 'result ' + lenient + (failed ? 'failed' : 'success');
       if (Number(failReason)) failReason = ' <a href="#fail_reason_' + failReason + '">as expected</a>'; else failReason = '';
       if (lenient && !failed) lenient = ' after adjusting whitespace'; else lenient = '';
       document.getElementById('explanation-' + i).innerHTML = (failed ? 'Failed' : 'Passed') + failReason + lenient + '.';
+    }
+
+    function showCode(code, id) {
+      var element = document.getElementById(id);
+      element.textContent = code;
+      element.innerHTML = element.innerHTML.replace(/ /g, '<span> </span>').replace(/\t/g, '→');
+    }
+
+    function normalizeWhitespace(s) {
+        return s.trim().replace(/<\/p>\r?\n<p>/gm, '<br><br>').replace(/<p>([\s\S]*)<\/p>/gm, '$1').replace(/>\r?\n</gm, '><');
     }
   </script>
 </html>$(LF)
