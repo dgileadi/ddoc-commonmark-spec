@@ -65,7 +65,7 @@ example failures](#fail_reasons) too.
 
         if (!exclude)
         {
-            ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", markdown, "\"></input>\n");
+            ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", markdown.replace("\r", "&#13;").replace("\n", "&#10;"), "\"></input>\n");
             ddoc.write("<div class=\"markdown code-block\"><strong>Markdown</strong><pre><code id=\"markdown-code-", exampleNumber, "\"></code></pre></div>\n");
 
             ddoc.write("$(MARKDOWN_TEST ");
