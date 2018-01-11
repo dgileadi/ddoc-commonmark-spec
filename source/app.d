@@ -73,7 +73,7 @@ example failures](#fail_reasons) too.
 
         if (!exclude)
         {
-            ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", markdown.replace("\r", "&#13;").replace("\n", "&#10;"), "\"></input>\n");
+            ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", markdown.replace("\r", "&#13;").replace("\n", "&#10;").replace("\"", "&quot;"), "\"></input>\n");
             ddoc.write("<div class=\"markdown code-block\"><strong>Markdown</strong><pre><code id=\"markdown-code-", exampleNumber, "\"></code></pre></div>\n");
 
             ddoc.write("$(MARKDOWN_TEST ");
@@ -158,7 +158,13 @@ void replaceCodeBlockDelimiters(ref string markdown, string section)
                     breakType = c;
                     breakStart = i;
                 }
-                breakEnd = i + 1;
+                if (breakType == c)
+                    breakEnd = i + 1;
+                else
+                {
+                    breakStart = -1;
+                    breakEnd = -1;
+                }
                 break;
             default:
                 atLineStart = false;

@@ -1,4 +1,4 @@
-EXAMPLE_HEADER = <h2 class="example"><a href="#example-$1" name="example-$1">Example $1</a></h2>
+EXAMPLE_HEADER = <h3 class="example"><a href="#example-$1" name="example-$1">Example $1</a></h3>
 <div class="spec-link"><a href="http://spec.commonmark.org/0.28/#example-$1">see it in the spec</a></div>
 EXPLANATION = <div class="explanation"><div id="result-$1" class="result exclude"></div> <span id="explanation-$1">$2</span></div>
 MARKDOWN_TEST =
@@ -17,16 +17,27 @@ DDOC =
     <meta charset="UTF-8">
     <title>DDoc Markdown Tests</title>
     <style type="text/css" media="screen">
+        body {
+            font-family: sans-serif;
+        }
         .code-block {
             float: left;
             margin: 0;
             width: 33%;
             margin-bottom: 2em;
         }
+        .code-block > pre {
+            margin: 2px;
+            background-color: #f6f6f6;
+            border: 1px solid silver;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+        }
         .actual, .expected {
             display: none;
         }
-        h2.example {
+        .example {
             clear: both;
         }
         .result {
