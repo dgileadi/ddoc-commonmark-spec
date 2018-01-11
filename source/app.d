@@ -30,8 +30,7 @@ Please note that examples that use `---` are replaced with `___` or `***`,
 to avoid conflicting with DDoc code sections. There are [other expected
 example failures](#fail_reasons) too.
 
-## Spec Examples:
-");
+# Spec Examples:");
 
     auto specJSON = specFile.readText();
 	specJSON.strip();
@@ -47,7 +46,7 @@ example failures](#fail_reasons) too.
         if (section != currentSection)
         {
             currentSection = section;
-            ddoc.write("\n# ", section, "\n");
+            ddoc.write("\n## ", section);
         }
 
 		ddoc.write("\n$(EXAMPLE_HEADER ", exampleNumber, ")\n");
@@ -56,9 +55,9 @@ example failures](#fail_reasons) too.
         bool exclude = ignore && cast(bool) ignoreExamples[exampleNumber]["exclude"];
         string failReason = ignore ? cast(string) ignoreExamples[exampleNumber]["reason"] : "0";
         string markdown = cast(string) test["markdown"];
-        markdown.replaceCodeBlockDelimiters(section);
+        markdown = markdown.replaceCodeBlockDelimiters(section);
         string expected = cast(string) test["html"];
-        expected.replaceCodeBlockDelimiters(section);
+        expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars();
 
         ddoc.write("$(EXPLANATION ", exampleNumber, ",");
         if (ignore)
@@ -122,7 +121,7 @@ string[] getReasons(JSONValue ignore)
     return reasons;
 }
 
-void replaceCodeBlockDelimiters(ref string markdown, string section)
+string replaceCodeBlockDelimiters(string markdown, string section)
 {
     bool atLineStart = true;
     size_t breakStart = -1;
@@ -153,7 +152,7 @@ void replaceCodeBlockDelimiters(ref string markdown, string section)
                 break;
             case '-':
             case '*':
-                if (breakStart == -1)
+                if (atLineStart && breakStart == -1)
                 {
                     breakType = c;
                     breakStart = i;
@@ -165,6 +164,7 @@ void replaceCodeBlockDelimiters(ref string markdown, string section)
                     breakStart = -1;
                     breakEnd = -1;
                 }
+                atLineStart = false;
                 break;
             default:
                 atLineStart = false;
@@ -174,4 +174,37 @@ void replaceCodeBlockDelimiters(ref string markdown, string section)
         }
     }
     replaceBreak();
+    return markdown;
+}
+
+string escapeMarkdownChars(string s)
+{
+    for (size_t i = 0; i < s.length; i++)
+    {
+        char c = s[i];
+        switch (c)
+        {
+        case '`':
+        case '*':
+        case '_':
+        case '{':
+        case '}':
+        case '[':
+        case ']':
+        case '(':
+        case ')':
+        case '#':
+        case '+':
+        case '-':
+        case '.':
+        case '!':
+            string escaped = "&#" ~ to!string(cast(int)c) ~ ';';
+            s.replaceInPlace(i, i + 1, escaped);
+            i += escaped.length - 1;
+            break;
+        default:
+            break;
+        }
+    }
+    return s;
 }

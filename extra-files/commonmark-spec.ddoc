@@ -37,7 +37,7 @@ DDOC =
         .actual, .expected {
             display: none;
         }
-        .example {
+        h1, h2, h3, h4 {
             clear: both;
         }
         .result {
