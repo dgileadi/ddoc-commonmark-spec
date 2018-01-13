@@ -72,7 +72,8 @@ example failures](#fail_reasons) too.
 
         if (!exclude)
         {
-            ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", markdown.replace("\r", "&#13;").replace("\n", "&#10;").replace("\"", "&quot;"), "\"></input>\n");
+            string escapedMarkdown = markdown.escapeMarkdownChars().replace("\r", "&#13;").replace("\n", "&#10;").replace("\"", "&quot;");
+            ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", escapedMarkdown, "\"></input>\n");
             ddoc.write("<div class=\"markdown code-block\"><strong>Markdown</strong><pre><code id=\"markdown-code-", exampleNumber, "\"></code></pre></div>\n");
 
             ddoc.write("$(MARKDOWN_TEST ");
@@ -133,7 +134,9 @@ string replaceCodeBlockDelimiters(string markdown, string section)
         char replacement = breakType == '*' || section.startsWith("Thematic") ? '_' : '*';
         size_t length = breakEnd - breakStart;
         if (breakStart != -1 && (length >= 3 || (breakType == '*' && length == 2)))
-            markdown.replaceInPlace(breakStart, breakEnd, replacement.repeat(breakEnd - breakStart).array);
+            for (size_t i = breakStart; i < breakEnd; i++)
+                if (markdown[i] == breakType)
+                    markdown.replaceInPlace(i, i + 1, to!string(replacement));
     }
 
     for (size_t i = 0; i < markdown.length; i++)
@@ -198,6 +201,7 @@ string escapeMarkdownChars(string s)
         case '-':
         case '.':
         case '!':
+        case '\\':
             string escaped = "&#" ~ to!string(cast(int)c) ~ ';';
             s.replaceInPlace(i, i + 1, escaped);
             i += escaped.length - 1;
