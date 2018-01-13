@@ -29,9 +29,11 @@ Tests for DDoc's limited support of the CommonMark spec.
 
 Please note that examples that use `---` are replaced with `___` or `***`,
 to avoid conflicting with DDoc code sections. There are [other expected
-example failures](#fail_reasons) too.
+example failures](#fail_reasons) too, because [DDoc does not implement the
+full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 
-# Spec Examples:");
+# Spec Examples:
++/");
 
     auto specJSON = specFile.readText();
 	specJSON.strip();
@@ -47,10 +49,10 @@ example failures](#fail_reasons) too.
         if (section != currentSection)
         {
             currentSection = section;
-            ddoc.write("\n## ", section);
+            ddoc.write("\n/// ## ", section);
         }
 
-		ddoc.write("\n$(EXAMPLE_HEADER ", exampleNumber, ")\n");
+		ddoc.write("\n/++\n$(EXAMPLE_HEADER ", exampleNumber, ")\n");
 
         bool ignore = (exampleNumber in ignoreExamples) !is null;
         bool exclude = ignore && "exclude" in ignoreExamples[exampleNumber] && cast(bool) ignoreExamples[exampleNumber]["exclude"];
@@ -89,14 +91,15 @@ example failures](#fail_reasons) too.
             ddoc.write(failReason);
             ddoc.write(",\n");
             ddoc.write(expected);
-            ddoc.write(")\n\n");
+            ddoc.write(")\n");
         }
+        ddoc.write("+/\n");
 
 		specJSON.skipOver(",");
 		specJSON.stripLeft();
 	}
 
-    ddoc.write(`
+    ddoc.write(`/++
 <a name="fail_reasons"></a>
 ## Reasons for expected failures
 `);
