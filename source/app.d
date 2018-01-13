@@ -52,7 +52,7 @@ example failures](#fail_reasons) too.
 		ddoc.write("\n$(EXAMPLE_HEADER ", exampleNumber, ")\n");
 
         bool ignore = (exampleNumber in ignoreExamples) !is null;
-        bool exclude = ignore && cast(bool) ignoreExamples[exampleNumber]["exclude"];
+        bool exclude = ignore && "exclude" in ignoreExamples[exampleNumber] && cast(bool) ignoreExamples[exampleNumber]["exclude"];
         string failReason = ignore ? cast(string) ignoreExamples[exampleNumber]["reason"] : "0";
         string markdown = cast(string) test["markdown"];
         markdown = markdown.replaceCodeBlockDelimiters(section);
@@ -169,6 +169,13 @@ string replaceCodeBlockDelimiters(string markdown, string section)
                 }
                 atLineStart = false;
                 break;
+            case '\\':
+                if (!atLineStart)
+                {
+                    breakStart = -1;
+                    breakEnd = -1;
+                }
+                break;
             default:
                 atLineStart = false;
                 breakStart = -1;
@@ -199,6 +206,7 @@ string escapeMarkdownChars(string s)
         case '#':
         case '+':
         case '-':
+        case '~':
         case '.':
         case '!':
         case '\\':
