@@ -103,7 +103,7 @@ DDOC =
     }
 
     function normalizeWhitespace(s) {
-        return s.trim().replace(/<\/p>\r?\n<p>/gm, '</p><br><br><p>').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<');
+        return s.trim().replace(/<\/p>\r?\n</gm, '</p><br><br><').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<');
     }
   </script>
 </html>$(LF)
