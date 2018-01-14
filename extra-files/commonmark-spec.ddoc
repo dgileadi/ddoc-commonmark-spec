@@ -1,4 +1,4 @@
-EXAMPLE_HEADER = <h3 class="example"><a href="#example-$1" name="example-$1">Example $1</a></h3>
+EXAMPLE_HEADER = <h3 class="example"><a href="#example-$1" name="example-$1" title="Permalink to this example">Example $1</a></h3>
 <div class="spec-link"><a href="http://spec.commonmark.org/0.28/#example-$1">see it in the spec</a></div>
 EXPLANATION = <div class="explanation"><div id="result-$1" class="result exclude"></div> <span id="explanation-$1">$2</span></div>
 MARKDOWN_TEST =
@@ -9,6 +9,7 @@ EXPECTED_RESULT =
 <div id="expected-$1" class="expected" data-fail-reason="$2">$3</div>
 
 D_CODE = <pre><code>$0</code></pre>
+OTHER_CODE = <pre><code class="language-$1">$+</code></pre>
 
 DDOC =
 <!DOCTYPE html>
@@ -19,6 +20,17 @@ DDOC =
     <style type="text/css" media="screen">
         body {
             font-family: sans-serif;
+        }
+        .example > a {
+            color: black;
+            text-decoration: none;
+        }
+        .example > a:hover {
+            text-decoration: underline;
+        }
+        .example > a:hover::after {
+            content: " \00B6"; /* Unicode pilcrow symbol */
+            color: #gray;
         }
         .code-block {
             float: left;
@@ -88,7 +100,7 @@ DDOC =
       var lenient = '';
 
       // be lenient with paragraphs and whitespace:
-      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); console.log('lenient-comparing ' + actual + ' to ' + expected); failed = expected != actual; lenient = 'lenient-'; }
+      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); failed = expected != actual; lenient = 'lenient-'; if (failed) console.log('lenient-compared ' + actual + ' to ' + expected); }
 
       document.getElementById('result-' + i).className = 'result ' + lenient + (failed ? 'failed' : 'success');
       if (Number(failReason)) failReason = ' <a href="#fail_reason_' + failReason + '">as expected</a>'; else failReason = '';

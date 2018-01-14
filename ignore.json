@@ -1,8 +1,9 @@
 {
   "reasons": [
     "DDoc doesn't support indented code blocks",
+    "Underscore (_) characters [prevent identifier emphasis](https://dlang.org/spec/ddoc.html#emphasis) and are removed",
     "`---` indicates a code block in DDoc, not a heading or thematic break",
-    "DDoc code blocks that start with `---` must also end with `---`"
+    "DDoc fenced code blocks must have ending fences."
   ],
   "examples": {
     "1": { "reason": 1 },
@@ -17,12 +18,23 @@
     "69": { "reason": 1 },
     "76": { "reason": 1 },
     "25": {
-      "reason": 2,
-      "exclude": true
+      "reason": 2
+    },
+    "95": {
+        "reason": 4,
+        "exclude": true
+    },
+    "96": {
+        "reason": 4,
+        "exclude": true
     },
     "97": {
-      "reason": 3,
+      "reason": 4,
       "exclude": true
+    },
+    "108": {
+        "reason": 4,
+        "exclude": true
     }
   }
 }

@@ -60,20 +60,20 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
         string markdown = cast(string) test["markdown"];
         markdown = markdown.replaceCodeBlockDelimiters(section);
         string expected = cast(string) test["html"];
-        expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars();
+        expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars().replaceNewlines();
 
         ddoc.write("$(EXPLANATION ", exampleNumber, ",");
         if (ignore)
         {
             ddoc.write(" This test is [expected to fail](#fail_reason_", failReason, ")");
             if (exclude)
-                ddoc.write(" and has been excluded because it also fails to compile");
+                ddoc.write(" and has been excluded because it breaks rendering");
         }
         else
             ddoc.write(" Error generating HTML from Markdown");
         ddoc.write(".)\n");
 
-        string escapedMarkdown = markdown.escapeMarkdownChars().replace("\r", "&#13;").replace("\n", "&#10;").replace("\"", "&quot;");
+        string escapedMarkdown = markdown.escapeMarkdownChars().replaceNewlines().replace("\"", "&quot;");
         ddoc.write("<input id=\"markdown-", exampleNumber, "\" type=\"hidden\" value=\"", escapedMarkdown, "\"></input>\n");
         ddoc.write("<div class=\"markdown code-block\"><strong>Markdown</strong><pre><code id=\"markdown-code-", exampleNumber, "\"></code></pre></div>\n");
 
@@ -188,6 +188,11 @@ string replaceCodeBlockDelimiters(string markdown, string section)
     }
     replaceBreak();
     return markdown;
+}
+
+string replaceNewlines(string s)
+{
+    return s.replace("\r", "&#13;").replace("\n", "&#10;");
 }
 
 string escapeMarkdownChars(string s)
