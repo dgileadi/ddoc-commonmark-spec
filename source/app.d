@@ -62,6 +62,12 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
         string expected = cast(string) test["html"];
         expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars().replaceNewlines();
 
+        if (section == "Emphasis and strong emphasis")
+        {
+            markdown = markdown.replace("_", "*");
+            expected = expected.replace("_", "*");
+        }
+
         ddoc.write("$(EXPLANATION ", exampleNumber, ",");
         if (ignore)
         {
@@ -202,6 +208,7 @@ string escapeMarkdownChars(string s)
         char c = s[i];
         switch (c)
         {
+        case ',':
         case '`':
         case '*':
         case '_':

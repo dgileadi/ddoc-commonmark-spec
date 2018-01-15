@@ -3,13 +3,14 @@ EXAMPLE_HEADER = <h3 class="example"><a href="#example-$1" name="example-$1" tit
 EXPLANATION = <div class="explanation"><div id="result-$1" class="result exclude"></div> <span id="explanation-$1">$2</span></div>
 MARKDOWN_TEST =
 <div class="html code-block"><strong>Rendered HTML</strong><pre><code id="actual-code-$1"></code></pre></div>
-<div id="actual-$1" class="actual">$2</div>
+<div id="actual-$1" class="actual">$+</div>
 EXPECTED_RESULT =
 <div class="html code-block"><strong>Expected HTML</strong><pre><code id="expected-code-$1"></code></pre></div>
 <div id="expected-$1" class="expected" data-fail-reason="$2">$3</div>
 
 D_CODE = <pre><code>$0</code></pre>
 OTHER_CODE = <pre><code class="language-$1">$+</code></pre>
+D_INLINECODE = <code>$0</code>
 
 DDOC =
 <!DOCTYPE html>
