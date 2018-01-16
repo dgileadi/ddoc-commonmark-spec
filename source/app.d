@@ -15,9 +15,9 @@ void main()
     if (!exists(specFile))
         download("http://spec.commonmark.org/" ~ specVersion ~ "/spec.json", specFile);
 
-    auto ignoreJSON = toJSONValue("ignore.json".readText());
-    string[] ignoreReasons = getReasons(ignoreJSON);
-    JSONValue[string] ignoreExamples = cast(JSONValue[string]) ignoreJSON["examples"];
+    auto failuresJSON = toJSONValue("failures.json".readText());
+    string[] failureReasons = failuresJSON["reasons"].to!(JSONValue[]).map!(reason => reason.to!string).array();
+    JSONValue[string] expectedFailureExamples = cast(JSONValue[string]) failuresJSON["examples"];
     auto ddoc = File("ddoc-commonmark-spec.d", "w");
     ddoc.write(r"// PERMUTE_ARGS:
 // REQUIRED_ARGS: -D -Dd${RESULTS_DIR}/compilable -o-
@@ -54,9 +54,9 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 
 		ddoc.write("\n/++\n$(EXAMPLE_HEADER ", exampleNumber, ")\n");
 
-        bool ignore = (exampleNumber in ignoreExamples) !is null;
-        bool exclude = ignore && "exclude" in ignoreExamples[exampleNumber] && cast(bool) ignoreExamples[exampleNumber]["exclude"];
-        string failReason = ignore ? cast(string) ignoreExamples[exampleNumber]["reason"] : "0";
+        bool expectFailure = (exampleNumber in expectedFailureExamples) !is null;
+        bool exclude = expectFailure && "exclude" in expectedFailureExamples[exampleNumber] && cast(bool) expectedFailureExamples[exampleNumber]["exclude"];
+        string failReason = expectFailure ? cast(string) expectedFailureExamples[exampleNumber]["reason"] : "0";
         string markdown = cast(string) test["markdown"];
         string expected = cast(string) test["html"];
 
@@ -67,7 +67,7 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
         expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars().replaceNewlines();
 
         ddoc.write("$(EXPLANATION ", exampleNumber, ",");
-        if (ignore)
+        if (expectFailure)
         {
             ddoc.write(" This test is [expected to fail](#fail_reason_", failReason, ")");
             if (exclude)
@@ -107,7 +107,7 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 <a name="fail_reasons"></a>
 ## Reasons for expected failures
 `);
-    foreach (i, reason; ignoreReasons)
+    foreach (i, reason; failureReasons)
     {
         ddoc.write((i+1), `. <a name="fail_reason_`, (i+1), `"></a> `, reason, `
 `);
@@ -118,15 +118,6 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 +/
 module ddocmarkdown;
 ");
-}
-
-private string[] getReasons(JSONValue ignore)
-{
-    JSONValue[] ignoreReasons = cast(JSONValue[]) ignore["reasons"];
-    string[] reasons = new string[ignoreReasons.length];
-    foreach (i, reason; ignoreReasons)
-        reasons[i] = cast(string) reason;
-    return reasons;
 }
 
 private string replaceCodeBlockDelimiters(string markdown, string section)

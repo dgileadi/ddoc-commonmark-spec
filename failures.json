@@ -1,7 +1,7 @@
 {
   "reasons": [
     "DDoc doesn't support indented code blocks.",
-    "Underscore characters [prevent identifier emphasis](https://dlang.org/spec/ddoc.html#emphasis) and are removed.",
+    "In DDoc, underscore characters [prevent identifier emphasis](https://dlang.org/spec/ddoc.html#emphasis) and are removed.",
     "`---` [indicates a code block in DDoc](https://dlang.org/spec/ddoc.html#embedded_code), not a heading or thematic break.",
     "The examples in this document are part of a single large DDoc block, so the fenced code blocks require a closing fence.",
     "Unlike [HTML blocks in CommonMark](http://spec.commonmark.org/0.28/#html-block), the [embedded HTML in DDoc](https://dlang.org/spec/ddoc.html#embedded_html) only \"passes through\" content directly within HTML tags. The rest is subject to regular DDoc processing.",
