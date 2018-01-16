@@ -58,15 +58,13 @@ full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
         bool exclude = ignore && "exclude" in ignoreExamples[exampleNumber] && cast(bool) ignoreExamples[exampleNumber]["exclude"];
         string failReason = ignore ? cast(string) ignoreExamples[exampleNumber]["reason"] : "0";
         string markdown = cast(string) test["markdown"];
-        markdown = markdown.replaceCodeBlockDelimiters(section);
         string expected = cast(string) test["html"];
-        expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars().replaceNewlines();
 
-        if (section == "Emphasis and strong emphasis")
-        {
+        if (section == "Emphasis and strong emphasis" && expected.count('_') == 0)
             markdown = markdown.replace("_", "*");
-            expected = expected.replace("_", "*");
-        }
+
+        markdown = markdown.replaceCodeBlockDelimiters(section);
+        expected = expected.replaceCodeBlockDelimiters(section).escapeMarkdownChars().replaceNewlines();
 
         ddoc.write("$(EXPLANATION ", exampleNumber, ",");
         if (ignore)
@@ -122,7 +120,7 @@ module ddocmarkdown;
 ");
 }
 
-string[] getReasons(JSONValue ignore)
+private string[] getReasons(JSONValue ignore)
 {
     JSONValue[] ignoreReasons = cast(JSONValue[]) ignore["reasons"];
     string[] reasons = new string[ignoreReasons.length];
@@ -131,7 +129,7 @@ string[] getReasons(JSONValue ignore)
     return reasons;
 }
 
-string replaceCodeBlockDelimiters(string markdown, string section)
+private string replaceCodeBlockDelimiters(string markdown, string section)
 {
     bool atLineStart = true;
     size_t breakStart = -1;
@@ -196,12 +194,12 @@ string replaceCodeBlockDelimiters(string markdown, string section)
     return markdown;
 }
 
-string replaceNewlines(string s)
+private string replaceNewlines(string s)
 {
     return s.replace("\r", "&#13;").replace("\n", "&#10;");
 }
 
-string escapeMarkdownChars(string s)
+private string escapeMarkdownChars(string s)
 {
     for (size_t i = 0; i < s.length; i++)
     {
