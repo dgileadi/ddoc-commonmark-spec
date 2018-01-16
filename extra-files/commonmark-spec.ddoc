@@ -89,15 +89,19 @@ DDOC =
       var markdown = document.getElementById('markdown-' + i);
       if (!markdown) continue; markdown = markdown.value;
       showCode(markdown, 'markdown-code-' + i);
-      var expected = document.getElementById('expected-' + i);
-      if (!expected) continue; expected = expected.innerHTML;
+
+      var expectedEl = document.getElementById('expected-' + i);
+      if (!expectedEl) continue; var expected = expectedEl.innerHTML;
+      var failReason = expectedEl.dataset.failReason;
       showCode(expected, 'expected-code-' + i);
-      var actual = document.getElementById('actual-' + i);
-      if (!actual) continue; actual = actual.innerHTML;
+      expectedEl.innerHTML = '';
+
+      var actualEl = document.getElementById('actual-' + i);
+      if (!actualEl) continue; var actual = actualEl.innerHTML;
       showCode(actual, 'actual-code-' + i);
+      actualEl.innerHTML = '';
 
       var failed = expected != actual;
-      var failReason = document.getElementById('expected-' + i).dataset.failReason;
       var lenient = '';
 
       // be lenient with paragraphs and whitespace:
