@@ -32,6 +32,8 @@ to avoid conflicting with DDoc code sections. There are [other expected
 example failures](#fail_reasons) too, because [DDoc does not implement the
 full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 
+$(TEST_TOTALS)
+
 # Spec Examples:
 +/");
 

@@ -1,3 +1,13 @@
+TEST_TOTALS =
+<table id="totals">
+<thead>
+<tr><th colspan="2">Successes</th><th colspan="3">Failures</th></tr>
+<tr><th>Passed</th><th>Passed After Adjusting Whitespace</th><th>Expected Failures</th><th>Unexpected Failures</th><th>Failed to Run</th></tr>
+</thead>
+<tbody>
+<tr><td id="passes"></td><td id="lenient-passes"></td><td id="expected-failures"></td><td id="failures"></td><td id="not-run"></td></tr>
+</tbody>
+</table>
 EXAMPLE_HEADER = <h3 class="example"><a href="#example-$1" name="example-$1" title="Permalink to this example">Example $1</a></h3>
 <div class="spec-link"><a href="http://spec.commonmark.org/0.28/#example-$1">see it in the spec</a></div>
 EXPLANATION = <div class="explanation"><div id="result-$1" class="result exclude"></div> <span id="explanation-$1">$2</span></div>
@@ -21,6 +31,26 @@ DDOC =
     <style type="text/css" media="screen">
         body {
             font-family: sans-serif;
+        }
+        #totals td {
+            text-align: center;
+            width: 20%;
+            font-size: 1.2em;
+        }
+        #passes {
+            background-color: #8f8;
+        }
+        #lenient-passes {
+            background-color: #fe8;
+        }
+        #expected-failures {
+            background-color: #fc8;
+        }
+        #failures {
+            background-color: #f88;
+        }
+        #not-run {
+            background-color: #b55;
         }
         .example > a {
             color: black;
@@ -61,14 +91,17 @@ DDOC =
             -moz-border-radius: .5em;
             border-radius: .5em;
         }
-        .failed, .lenient-failed {
+        .failed {
             background: red;
+        }
+        .lenient-failed {
+            background: orange;
         }
         .exclude {
             background: maroon;
         }
         .lenient-success {
-            background: orange;
+            background: gold;
         }
         .success {
             background: green;
@@ -85,10 +118,12 @@ DDOC =
     </div>
   </body>
   <script>
+    var totals = {total: 0, passes: 0, lenientPasses: 0, expectFailures: 0, failures: 0};
     for (var i = 1; i < 2000; i++) {
       var markdown = document.getElementById('markdown-' + i);
       if (!markdown) continue; markdown = markdown.value;
       showCode(markdown, 'markdown-code-' + i);
+      ++totals.total;
 
       var expectedEl = document.getElementById('expected-' + i);
       if (!expectedEl) continue; var expected = expectedEl.innerHTML;
@@ -103,15 +138,24 @@ DDOC =
 
       var failed = expected != actual;
       var lenient = '';
+      if (!failed) ++totals.passes;
 
       // be lenient with paragraphs and whitespace:
-      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); failed = expected != actual; lenient = 'lenient-'; if (failed) console.log('lenient-compared ' + actual + ' to ' + expected); }
+      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); failed = expected != actual; lenient = 'lenient-'; if (failed) console.log('lenient-compared ' + actual + ' to ' + expected); if (!failed) ++totals.lenientPasses; }
 
       document.getElementById('result-' + i).className = 'result ' + lenient + (failed ? 'failed' : 'success');
       if (Number(failReason)) failReason = ' <a href="#fail_reason_' + failReason + '">as expected</a>'; else failReason = '';
       if (lenient && !failed) lenient = ' after adjusting whitespace'; else lenient = '';
       document.getElementById('explanation-' + i).innerHTML = (failed ? 'Failed' : 'Passed') + failReason + lenient + '.';
+
+      if (failed && failReason) ++totals.expectFailures;
+      if (failed && !failReason) ++totals.failures;
     }
+    document.getElementById('passes').textContent = totals.passes;
+    document.getElementById('lenient-passes').textContent = totals.lenientPasses;
+    document.getElementById('expected-failures').textContent = totals.expectFailures;
+    document.getElementById('failures').textContent = totals.failures;
+    document.getElementById('not-run').textContent = (totals.total - totals.passes - totals.lenientPasses - totals.expectFailures - totals.failures);
 
     function showCode(code, id) {
       var element = document.getElementById(id);
@@ -120,7 +164,7 @@ DDOC =
     }
 
     function normalizeWhitespace(s) {
-        return s.trim().replace(/<\/p>\r?\n</gm, '</p><br><br><').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<');
+        return s.trim().replace(/<\/p>\r?\n<\//gm, '</p></').replace(/<\/p>\r?\n</gm, '</p><br><br><').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<');
     }
   </script>
 </html>$(LF)

@@ -1,8 +1,9 @@
 {
   "reasons": [
     "DDoc doesn't support indented code blocks.",
+    "The DDoc in this document uses the plus `+` symbol, so any internal line that starts with `+` gets the initial `+` removed.",
+    "This document treats Markdown examples that start with `===` or `***` as headers because their previous line isn't empty.",
     "In DDoc, underscore characters [prevent identifier emphasis](https://dlang.org/spec/ddoc.html#emphasis) and are removed.",
-    "`---` [indicates a code block in DDoc](https://dlang.org/spec/ddoc.html#embedded_code), not a heading or thematic break.",
     "The examples in this document are part of a single large DDoc block, so the fenced code blocks require a closing fence.",
     "Unlike [HTML blocks in CommonMark](http://spec.commonmark.org/0.28/#html-block), the [embedded HTML in DDoc](https://dlang.org/spec/ddoc.html#embedded_html) only \"passes through\" content directly within HTML tags. The rest is subject to regular DDoc processing.",
     "Unbalanced HTML causes rendering failures."
@@ -15,60 +16,62 @@
     "6": { "reason": 1 },
     "7": { "reason": 1 },
     "8": { "reason": 1 },
+    "14": { "reason": 2 },
+    "15": { "reason": 3 },
+    "16": { "reason": 4 },
     "18": { "reason": 1 },
+    "19": { "reason": 1 },
     "39": { "reason": 1 },
     "69": { "reason": 1 },
     "76": { "reason": 1 },
-    "25": {
-      "reason": 2
-    },
+    "25": { "reason": 4 },
     "95": {
-        "reason": 4,
+        "reason": 5,
         "exclude": true
     },
     "96": {
-        "reason": 4,
+        "reason": 5,
         "exclude": true
     },
     "97": {
-      "reason": 4,
+      "reason": 5,
       "exclude": true
     },
     "108": {
-        "reason": 4,
+        "reason": 5,
         "exclude": true
     },
-    "116": { "reason": 5 },
+    "116": { "reason": 6 },
     "118": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "119": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "123": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "124": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "125": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "126": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "140": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     },
     "151": {
-        "reason": 6,
+        "reason": 7,
         "exclude": true
     }
   }
