@@ -1,3 +1,4 @@
+REQUIRE_JAVASCRIPT = <p id="requires_javascript">This page requires javascript to display the test results.</p>
 TEST_TOTALS =
 <table id="totals">
 <thead>
@@ -91,10 +92,10 @@ DDOC =
             -moz-border-radius: .5em;
             border-radius: .5em;
         }
-        .failed {
+        .failed, .lenient-failed {
             background: red;
         }
-        .lenient-failed {
+        .expected-failed {
             background: orange;
         }
         .exclude {
@@ -118,6 +119,7 @@ DDOC =
     </div>
   </body>
   <script>
+    document.getElementById('requires_javascript').style.display = 'none';
     var totals = {total: 0, passes: 0, lenientPasses: 0, expectFailures: 0, failures: 0};
     for (var i = 1; i < 2000; i++) {
       var markdown = document.getElementById('markdown-' + i);
@@ -141,10 +143,11 @@ DDOC =
       if (!failed) ++totals.passes;
 
       // be lenient with paragraphs and whitespace:
-      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); failed = expected != actual; lenient = 'lenient-'; if (failed) console.log('lenient-compared ' + actual + ' to ' + expected); if (!failed) ++totals.lenientPasses; }
+      if (failed) { expected = normalizeWhitespace(expected); actual = normalizeWhitespace(actual); failed = expected != actual; lenient = failed ? '' : 'lenient-'; if (failed) console.log(i + ' lenient-compared:\n' + actual + '\n   * to:\n' + expected); if (!failed) ++totals.lenientPasses; }
 
-      document.getElementById('result-' + i).className = 'result ' + lenient + (failed ? 'failed' : 'success');
-      if (Number(failReason)) failReason = ' <a href="#fail_reason_' + failReason + '">as expected</a>'; else failReason = '';
+      var className = lenient + (failed ? 'failed' : 'success');
+      if (Number(failReason)) { className = 'expected-' + className; failReason = ' <a href="#fail_reason_' + failReason + '">as expected</a>'; } else failReason = '';
+      document.getElementById('result-' + i).className = 'result ' + className;
       if (lenient && !failed) lenient = ' after adjusting whitespace'; else lenient = '';
       document.getElementById('explanation-' + i).innerHTML = (failed ? 'Failed' : 'Passed') + failReason + lenient + '.';
 

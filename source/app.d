@@ -25,12 +25,13 @@ void main()
 // EXTRA_SOURCES: extra-files/commonmark-spec.ddoc
 
 /++
-Tests for DDoc's limited support of the CommonMark spec.
+Tests for DDoc's limited support of the [the CommonMark spec version ", specVersion, "](http://spec.commonmark.org/", specVersion, r"/).
 
-Please note that examples that use `---` are replaced with `___` or `***`,
-to avoid conflicting with DDoc code sections. There are [other expected
+Please note that examples that use `---` have it replaced with `___` or `***`,
+to avoid conflicting with DDoc code sections. There are [expected
 example failures](#fail_reasons) too, because [DDoc does not implement the
 full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
+$(REQUIRE_JAVASCRIPT)
 
 $(TEST_TOTALS)
 
