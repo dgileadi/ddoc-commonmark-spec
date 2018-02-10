@@ -49,7 +49,7 @@ DDOC =
             background-color: #8f8;
         }
         #lenient-passes {
-            background-color: #fe8;
+            background-color: #cc8;
         }
         #expected-failures {
             background-color: #fc8;
@@ -112,7 +112,7 @@ DDOC =
             background: maroon;
         }
         .lenient-success {
-            background: gold;
+            background: #990;
         }
         .success {
             background: green;
@@ -177,7 +177,7 @@ DDOC =
     }
 
     function normalizeWhitespace(s) {
-        return s.trim().replace(/<\/p>\r?\n<\//gm, '</p></').replace(/<\/p>\r?\n</gm, '</p><br><br><').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<');
+        return s.trim().replace(/<\/p>\r?\n<\//gm, '</p></').replace(/<\/p>\r?\n<p>/gm, '</p><br><br><p>').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<');
     }
   </script>
 </html>$(LF)

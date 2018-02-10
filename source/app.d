@@ -111,12 +111,12 @@ module ddocmarkdown;
 
     ddoc.write(`
 /++
-<a name="fail-reasons"></a>
+<a id="fail-reasons"></a>
 ## Reasons for expected failures
 `);
     foreach (i, reason; failureReasons)
     {
-        ddoc.write((i+1), `. <a name="fail_reason_`, (i+1), `"></a> `, reason, `
+        ddoc.write((i+1), `. <a id="fail_reason_`, (i+1), `"></a> `, reason, `
 `);
     }
 
