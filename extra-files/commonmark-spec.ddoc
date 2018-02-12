@@ -40,6 +40,10 @@ DDOC =
         body {
             font-family: sans-serif;
         }
+        .content_wrapper {
+            max-width: 58em;
+            margin: auto;
+        }
         #totals td {
             text-align: center;
             width: 20%;
@@ -72,7 +76,21 @@ DDOC =
         }
         .example > a:hover::after {
             content: " \00B6"; /* Unicode pilcrow symbol */
-            color: #gray;
+            color: gray;
+        }
+        .spec-link {
+            margin-top: -1em;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        .spec-link::before {
+            content: "> ";
+            color: gray;
+        }
+        .explanation {
+            position: relative;
+            top: -2em;
+            left: 10em;
         }
         .code-block {
             float: left;
@@ -82,7 +100,7 @@ DDOC =
         }
         .code-block > pre {
             margin: 2px;
-            background-color: #f6f6f6;
+            background-color: #f9f9f9;
             border: 1px solid silver;
             -webkit-border-radius: 4px;
             -moz-border-radius: 4px;
