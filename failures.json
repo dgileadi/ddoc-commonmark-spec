@@ -2,11 +2,14 @@
   "reasons": [
     "DDoc doesn't support indented code blocks.",
     "The DDoc in this document uses the plus `+` symbol, so any internal line that starts with `+` gets the initial `+` removed.",
-    "This document treats Markdown examples that start with `===` or `***` as headers because their previous line isn't empty.",
     "In DDoc, underscore characters [prevent identifier emphasis](https://dlang.org/spec/ddoc.html#emphasis) and are removed.",
-    "The examples in this document are part of a single large DDoc block, so the fenced code blocks require a closing fence.",
     "Unlike [HTML blocks in CommonMark](http://spec.commonmark.org/0.28/#html-block), the [embedded HTML in DDoc](https://dlang.org/spec/ddoc.html#embedded_html) only \"passes through\" content directly within HTML tags. The rest is subject to regular DDoc processing.",
-    "Unbalanced HTML causes rendering failures."
+    "DDoc doesn't support quoting code with backticks `` ` `` across multiple lines.",
+    "Backticks inside code blocks are highlighted as [wysiwyg D strings](https://dlang.org/spec/lex.html#wysiwyg).",
+    "DDoc removes empty code blocks.",
+    "Unbalanced HTML causes rendering failures.",
+    "DDoc doesn't collapse blank lines.",
+    "DDoc doesn't support hard breaks via trailing spaces; use a trailing backslash `\\` instead."
   ],
   "examples": {
     "1": { "reason": 1 },
@@ -17,62 +20,104 @@
     "7": { "reason": 1 },
     "8": { "reason": 1 },
     "14": { "reason": 2 },
-    "15": { "reason": 3 },
-    "16": { "reason": 4 },
+    "16": { "reason": 3 },
     "18": { "reason": 1 },
     "19": { "reason": 1 },
+    "25": { "reason": 3 },
     "39": { "reason": 1 },
+    "54": { "reason": 1 },
+    "60": { "reason": 4 },
     "69": { "reason": 1 },
     "76": { "reason": 1 },
-    "25": { "reason": 4 },
-    "95": {
-        "reason": 5,
-        "exclude": true
-    },
-    "96": {
-        "reason": 5,
-        "exclude": true
-    },
-    "97": {
-      "reason": 5,
-      "exclude": true
-    },
-    "108": {
-        "reason": 5,
-        "exclude": true
-    },
-    "116": { "reason": 6 },
+    "79": { "reason": 1 },
+    "80": { "reason": 1 },
+    "81": { "reason": 1 },
+    "83": { "reason": 1 },
+    "84": { "reason": 1 },
+    "85": { "reason": 1 },
+    "86": { "reason": 1 },
+    "87": { "reason": 1 },
+    "90": { "reason": 5 },
+    "92": { "reason": 6 },
+    "93": { "reason": 6 },
+    "99": { "reason": 7 },
+    "103": { "reason": 1 },
+    "106": { "reason": 1 },
+    "113": { "reason": 7 },
+    "115": { "reason": 6 },
+    "116": { "reason": 3 },
     "118": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
     "119": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
     "123": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
     "124": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
     "125": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
     "126": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
+    "127": { "reason": 4 },
+    "129": { "reason": 4 },
+    "130": { "reason": 4 },
+    "131": { "reason": 4 },
+    "132": { "reason": 4 },
+    "133": { "reason": 4 },
+    "134": { "reason": 4 },
+    "137": { "reason": 4 },
+    "138": { "reason": 4 },
+    "139": { "reason": 4 },
     "140": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
     },
+    "144": { "reason": 4 },
+    "145": { "reason": 4 },
+    "147": { "reason": 4 },
+    "149": { "reason": 4 },
+    "150": { "reason": 1 },
     "151": {
-        "reason": 7,
+        "reason": 8,
         "exclude": true
-    }
+    },
+    "153": { "reason": 4 },
+    "156": { "reason": 4 },
+    "158": { "reason": 1 },
+    "176": { "reason": 1 },
+    "184": { "reason": 9 },
+    "188": { "reason": 1 },
+    "189": { "reason": 10 },
+    "190": { "reason": 9 },
+    "194": { "reason": 1 },
+    "199": { "reason": 1 },
+    "215": { "reason": 1 },
+    "216": { "reason": 1 },
+    "217": { "reason": 1 },
+    "220": { "reason": 1 },
+    "227": { "reason": 1 },
+    "233": { "reason": 1 },
+    "234": { "reason": 1 },
+    "235": { "reason": 1 },
+    "236": { "reason": 1 },
+    "237": { "reason": 1 },
+    "241": { "reason": 1 },
+    "249": { "reason": 1 },
+    "250": { "reason": 1 },
+    "251": { "reason": 1 },
+    "252": { "reason": 1 },
+    "253": { "reason": 1 }
   }
 }

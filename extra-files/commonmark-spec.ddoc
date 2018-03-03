@@ -13,7 +13,7 @@ EXAMPLE_HEADER = <h3 class="example"><a href="#example-$1" name="example-$1" tit
 <div class="spec-link"><a href="http://spec.commonmark.org/0.28/#example-$1">see it in the spec</a></div>
 EXPLANATION = <div class="explanation"><div id="result-$1" class="result exclude"></div> <span id="explanation-$1">$2</span></div>
 MARKDOWN_TEST =
-<div class="html code-block"><strong>Rendered HTML</strong><pre><code id="actual-code-$1"></code></pre></div>
+<div class="html code-block"><strong>Actual HTML</strong><pre><code id="actual-code-$1"></code></pre></div>
 <div id="actual-$1" class="actual">$+</div>
 EXPECTED_RESULT =
 <div class="html code-block"><strong>Expected HTML</strong><pre><code id="expected-code-$1"></code></pre></div>
@@ -195,7 +195,7 @@ DDOC =
     }
 
     function normalizeWhitespace(s) {
-        return s.trim().replace(/<\/p>\r?\n<\//gm, '</p></').replace(/<\/p>\r?\n<p>/gm, '</p><br><br><p>').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<').replace(/<br><br>$/, '');
+        return s.trim().replace(/<\/p>\r?\n<\//gm, '</p></').replace(/<\/p>\r?\n<p>/gm, '</p><br><br><p>').replace(/<\/?p>/g, '').replace(/>(\s)+/gm, '>').replace(/(\s)+</gm, '<').replace(/<br><br>$/g, '').replace(/^<br><br>/g, '');
     }
   </script>
 </html>$(LF)

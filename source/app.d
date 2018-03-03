@@ -28,9 +28,10 @@ void main()
 # Tests for DDoc's limited support of the [the CommonMark spec version ", specVersion, "](http://spec.commonmark.org/", specVersion, r"/).
 
 Please note that examples that use `---` have it replaced with `___` or `***`,
-to avoid conflicting with DDoc code sections. There are [expected
-example failures](#fail-reasons) too, because [DDoc does not implement the
-full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
+to avoid conflicting with DDoc code sections. Examples that use parenthesis-delimited
+ordered lists are replaced with dot delimiters to avoid conflicting with DDoc macros.
+There are [expected example failures](#fail-reasons) too, because [DDoc does not
+implement the full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 $(REQUIRE_JAVASCRIPT)
 
 $(TEST_TOTALS)
@@ -89,18 +90,18 @@ module ddocmarkdown;
 
         if (!exclude)
         {
-            ddoc.write("$(MARKDOWN_TEST ");
-            ddoc.write(test["example"]);
-            ddoc.write(",\n");
-            ddoc.write(markdown);
-            ddoc.write(")\n");
-
             ddoc.write("$(EXPECTED_RESULT ");
             ddoc.write(test["example"]);
             ddoc.write(", ");
             ddoc.write(failReason);
             ddoc.write(",\n");
             ddoc.write(expected);
+            ddoc.write(")\n");
+
+            ddoc.write("$(MARKDOWN_TEST ");
+            ddoc.write(test["example"]);
+            ddoc.write(",\n");
+            ddoc.write(markdown);
             ddoc.write(")\n");
         }
         ddoc.write("+/\nenum example_", test["example"], ";\n");
@@ -172,6 +173,16 @@ private string replaceCodeBlockDelimiters(string markdown, string section)
                     breakStart = -1;
                     breakEnd = -1;
                 }
+                atLineStart = false;
+                break;
+            case ')':
+                if (i > 0 && markdown[i-1] >= '0' && markdown[i-1] <= '9')
+                    markdown.replaceInPlace(i, i + 1, ".");
+                atLineStart = false;
+                break;
+            case '+':
+                if (atLineStart)
+                    markdown.replaceInPlace(i, i + 1, "*");
                 atLineStart = false;
                 break;
             case '\\':
