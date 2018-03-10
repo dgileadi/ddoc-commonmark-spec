@@ -19,12 +19,7 @@ void main()
     string[] failureReasons = failuresJSON["reasons"].to!(JSONValue[]).map!(reason => reason.to!string).array();
     JSONValue[string] expectedFailureExamples = cast(JSONValue[string]) failuresJSON["examples"];
     auto ddoc = File("ddoc-commonmark-spec.d", "w");
-    ddoc.write(r"// PERMUTE_ARGS:
-// REQUIRED_ARGS: -D -Dd${RESULTS_DIR}/compilable -o-
-// POST_SCRIPT: compilable/extra-files/ddocAny-postscript.sh markdown
-// EXTRA_SOURCES: extra-files/commonmark-spec.ddoc
-
-/++
+    ddoc.write(r"/++
 # Tests for DDoc's limited support of the [the CommonMark spec version ", specVersion, "](http://spec.commonmark.org/", specVersion, r"/).
 
 Please note that examples that use `---` have it replaced with `___` or `***`,
