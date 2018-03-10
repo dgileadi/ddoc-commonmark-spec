@@ -176,7 +176,9 @@ private string replaceCodeBlockDelimiters(string markdown, string section)
                 atLineStart = false;
                 break;
             case ')':
-                if (i > 0 && markdown[i-1] >= '0' && markdown[i-1] <= '9')
+                if (i > 1 &&
+                    markdown[i-1] >= '0' && markdown[i-1] <= '9' &&
+                    ((markdown[i-2] >= '0' && markdown[i-2] <= '9') || markdown[i-2] == '\n'))
                     markdown.replaceInPlace(i, i + 1, ".");
                 atLineStart = false;
                 break;
