@@ -140,6 +140,14 @@ DDOC =
             display: inline-block;
             background: radial-gradient(circle, #cc0, rgba(192,192,0,0) 2px);
         }
+        li:target {
+            animation: hilite-background 5s;
+        }
+        @keyframes hilite-background {
+            0% {background-color: transparent;}
+            30% {background-color: #fbff0f;}
+            100% {background-color: transparent;}
+        }
     </style>
   </head>
   <body id="ddoc_main" class="ddoc dlang">

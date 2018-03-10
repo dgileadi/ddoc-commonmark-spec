@@ -158,6 +158,19 @@
     "446": { "reason": 3 },
     "451": { "reason": 3 },
     "456": { "reason": 3 },
-    "470": { "reason": 11 }
+    "470": { "reason": 11 },
+
+    "587": {
+        "reason": 8,
+        "exclude": true
+    },
+    "591": {
+        "reason": 8,
+        "exclude": true
+    },
+    "604": {
+        "reason": 8,
+        "exclude": true
+    }
   }
 }
