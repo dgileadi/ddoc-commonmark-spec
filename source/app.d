@@ -22,11 +22,13 @@ void main()
     ddoc.write(r"/++
 # Tests for DDoc's limited support of the [the CommonMark spec version ", specVersion, "](http://spec.commonmark.org/", specVersion, r"/).
 
-Please note that examples that use `---` have it replaced with `___` or `***`,
-to avoid conflicting with DDoc code sections. Examples that use parenthesis-delimited
-ordered lists are replaced with dot delimiters to avoid conflicting with DDoc macros.
-There are [expected example failures](#fail-reasons) too, because [DDoc does not
-implement the full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
+The examples were generated from the spec. However please note that some examples have
+been automatically modified to account for Markdown features that conflict with DDoc
+features. For instance, examples that use `---` replace it with `___` or `***` to avoid
+conflicting with DDoc code sections, and examples that use parenthesis-delimited ordered
+lists replace them with dot delimiters to avoid conflicting with DDoc macros. There are
+also [expected example failures](#fail-reasons), because [DDoc does not implement the
+full CommonMark spec](https://dlang.org/spec/ddoc.html#markdown_differences).
 $(REQUIRE_JAVASCRIPT)
 
 $(TEST_TOTALS)
