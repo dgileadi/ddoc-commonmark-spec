@@ -1,0 +1,50 @@
+[
+    {
+        "example": 1191,
+        "section": "Tables",
+        "markdown": "| foo | bar |\n| --- | --- |\n| baz | bim |",
+        "html": "<table>\n<thead>\n<tr>\n<th>foo</th>\n<th>bar</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>baz</td>\n<td>bim</td>\n</tr></tbody></table>"
+    },
+    {
+        "example": 1192,
+        "section": "Tables",
+        "markdown": "| abc | defghi |\n:-: | -----------:\nbar | baz",
+        "html": "<table>\n<thead>\n<tr>\n<th align=\"center\">abc</th>\n<th align=\"right\">defghi</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td align=\"center\">bar</td>\n<td align=\"right\">baz</td>\n</tr></tbody></table>"
+    },
+    {
+        "example": 1193,
+        "section": "Tables",
+        "markdown": "| f\\|oo  |\n| ------ |\n| b `\\|` az |\n| b **\\|** im |",
+        "html": "<table>\n<thead>\n<tr>\n<th>f|oo</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>b <code>|</code> az</td>\n</tr>\n<tr>\n<td>b <strong>|</strong> im</td>\n</tr></tbody></table>"
+    },
+    {
+        "example": 1194,
+        "section": "Tables",
+        "markdown": "| abc | def |\n| --- | --- |\n| bar | baz |\n> bar",
+        "html": "<table>\n<thead>\n<tr>\n<th>abc</th>\n<th>def</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>bar</td>\n<td>baz</td>\n</tr></tbody></table>\n<blockquote>\n<p>bar</p>\n</blockquote>"
+    },
+    {
+        "example": 1195,
+        "section": "Tables",
+        "markdown": "| abc | def |\n| --- | --- |\n| bar | baz |\nbar\n\nbar",
+        "html": "<table>\n<thead>\n<tr>\n<th>abc</th>\n<th>def</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>bar</td>\n<td>baz</td>\n</tr>\n<tr>\n<td>bar</td>\n<td></td>\n</tr></tbody></table>\n<p>bar</p>"
+    },
+    {
+        "example": 1196,
+        "section": "Tables",
+        "markdown": "| abc | def |\n| --- |\n| bar |",
+        "html": "<p>| abc | def |\n| --- |\n| bar |</p>"
+    },
+    {
+        "example": 1197,
+        "section": "Tables",
+        "markdown": "| abc | def |\n| --- | --- |\n| bar |\n| bar | baz | boo |",
+        "html": "<table>\n<thead>\n<tr>\n<th>abc</th>\n<th>def</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>bar</td>\n<td></td>\n</tr>\n<tr>\n<td>bar</td>\n<td>baz</td>\n</tr></tbody></table>"
+    },
+    {
+        "example": 1198,
+        "section": "Tables",
+        "markdown": "| abc | def |\n| --- | --- |",
+        "html": "<table>\n<thead>\n<tr>\n<th>abc</th>\n<th>def</th>\n</tr>\n</thead></table>"
+    }
+]
