@@ -204,6 +204,8 @@ private string replaceCodeBlockDelimiters(string markdown, string section)
                 break;
             default:
                 atLineStart = false;
+                if (breakType == '-' && (breakEnd - breakStart) >= 3)
+                    break;
                 breakStart = -1;
                 breakEnd = -1;
                 break;
