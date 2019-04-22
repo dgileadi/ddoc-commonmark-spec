@@ -2,7 +2,7 @@
 	"fileVersion": 1,
 	"versions": {
 		"iopipe": "0.0.2",
-		"std_data_json": "0.18.2",
-		"taggedalgebraic": "0.10.11"
+		"std_data_json": "0.18.3",
+		"taggedalgebraic": "0.10.13"
 	}
 }
