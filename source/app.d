@@ -11,7 +11,7 @@ import stdx.data.json;
 void main()
 {
     string specVersion = "0.29";
-    string specFile = "spec.json";
+    string specFile = "spec-" ~ specVersion ~ ".json";
     if (!exists(specFile))
         download("http://spec.commonmark.org/" ~ specVersion ~ "/spec.json", specFile);
 

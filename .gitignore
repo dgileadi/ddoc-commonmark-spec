@@ -11,7 +11,7 @@ markdown-spec-test-*
 markdown-spec
 ddoc-commonmark-spec.*
 app.html
-spec.json
+spec*.json
 *.exe
 *.o
 *.obj
